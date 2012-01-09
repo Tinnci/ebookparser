@@ -117,9 +117,10 @@ public class Fb2InstantParser {
 		matcher = SOP.fb2Sequence.matcher(source);
 		if (matcher.find()) {
 			String sequence = matcher.group(1);
-			matcher = SOP.fb2SequenceContent.matcher(sequence);
+			matcher = SOP.fb2SequenceName.matcher(sequence);
 			if (matcher.find())
 				this.eBook.sequenceName = matcher.group(1);
+			matcher = SOP.fb2SequenceNumber.matcher(sequence);
 			if (matcher.find())
 				this.eBook.sequenceNumber = matcher.group(1);
 		}

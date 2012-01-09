@@ -36,7 +36,8 @@ public class SOP {
 	public static Pattern fb2genre;
 	public static Pattern fb2Language;
 	public static Pattern fb2Sequence;
-	public static Pattern fb2SequenceContent;
+	public static Pattern fb2SequenceName;
+	public static Pattern fb2SequenceNumber;
 	public static Pattern fb2Annotation;
 	public static Pattern epubDescription;
 	public static Pattern epubTitle;
@@ -60,7 +61,8 @@ public class SOP {
 		fb2genre = Pattern.compile("(?s)<genre>(.*?)</genre>");
 		fb2Language = Pattern.compile("(?s)<lang>(.*?)</lang>");
 		fb2Sequence = Pattern.compile("(?s)<sequence(.*)>");
-		fb2SequenceContent = Pattern.compile("\"(.*?)\"");
+		fb2SequenceName = Pattern.compile("name=\"(.*?)\"");
+		fb2SequenceNumber = Pattern.compile("number=\"(.*?)\"");
 
 		fb2Annotation = Pattern
 				.compile("(?s)<annotation>(.*?)</annotation>");
