@@ -1,0 +1,27 @@
+eBook parser library - a Java library designed to handle the e-book formats: epub and fb2.
+
+The main advantage of this program is the instantaneous (i would even say 
+like greased lightning, compared to other programs) information processing.
+
+Library to retrieve the file e-book information such as title, author, 
+genre, series title, etc. This library can be used to organize databases of 
+e-books, also can be used in programs of processing a large number 
+of e-books, where speed is essential. At the same time, the program does not 
+extract all content from e-book, does not check e-book structure for errors
+etc. It only reads from it a small amount of information, sufficient for 
+most applications. In this way we obtain the instantaneous speed of 
+information processing.
+
+Use of the library is very simple, just add the following lines in the your code
+
+	import ebook.*;
+	import ebook.parser.*;
+
+	Parser parser = new InstantParser();
+	EBook ebook = parser.parse(filename);
+	if (ebook.isOk) {
+		// do anything with ebook
+	} 
+
+To date, the program supports the formats .fb2 and .epub. In further 
+assumed processing other formats.
