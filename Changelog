@@ -1,0 +1,6 @@
+2012-01-12 Andrew Mochalov <avmae@mail.ru
+
+	* Changelog added
+	* All fields in class SOP changed to "protected".
+	* method parse() in classes EpubInstantParser and Fb2InstantParser changed to "protected"
+	

@@ -23,27 +23,27 @@ import java.util.regex.Pattern;
  * Store of Patterns
  */
 public class SOP {
-	public static Pattern fb2File;
-	public static Pattern fb2zipFile;
-	public static Pattern epubFile;
-	public static Pattern opfFile;
-	public static Pattern xmlEncoding;
-	public static Pattern fb2FirstName;
-	public static Pattern fb2MiddleName;
-	public static Pattern fb2LastName;
-	public static Pattern fb2Author;
-	public static Pattern fb2Title;
-	public static Pattern fb2genre;
-	public static Pattern fb2Language;
-	public static Pattern fb2Sequence;
-	public static Pattern fb2SequenceName;
-	public static Pattern fb2SequenceNumber;
-	public static Pattern fb2Annotation;
-	public static Pattern epubDescription;
-	public static Pattern epubTitle;
-	public static Pattern epubAuthor;
-	public static Pattern epubLanguage;
-	public static Pattern epubGenre;
+	protected static Pattern fb2File;
+	protected static Pattern fb2zipFile;
+	protected static Pattern epubFile;
+	protected static Pattern opfFile;
+	protected static Pattern xmlEncoding;
+	protected static Pattern fb2FirstName;
+	protected static Pattern fb2MiddleName;
+	protected static Pattern fb2LastName;
+	protected static Pattern fb2Author;
+	protected static Pattern fb2Title;
+	protected static Pattern fb2genre;
+	protected static Pattern fb2Language;
+	protected static Pattern fb2Sequence;
+	protected static Pattern fb2SequenceName;
+	protected static Pattern fb2SequenceNumber;
+	protected static Pattern fb2Annotation;
+	protected static Pattern epubDescription;
+	protected static Pattern epubTitle;
+	protected static Pattern epubAuthor;
+	protected static Pattern epubLanguage;
+	protected static Pattern epubGenre;
 //
 //	
 	static {

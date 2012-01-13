@@ -100,7 +100,7 @@ public class Fb2InstantParser {
 		return person;
 	}
 
-	public void parse() {
+	protected void parse() {
 		Matcher matcher;
 		matcher = SOP.fb2Author.matcher(source);
 		while (matcher.find())

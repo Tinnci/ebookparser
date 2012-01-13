@@ -97,7 +97,7 @@ public class EpubInstantParser {
 		return encoding;
 	}
 
-	public void parse() {
+	protected void parse() {
 		Matcher matcher;
 		matcher = SOP.epubTitle.matcher(this.source);
 		if (matcher.find())
