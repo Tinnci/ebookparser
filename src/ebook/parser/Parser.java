@@ -20,17 +20,28 @@ package ebook.parser;
 import ebook.EBook;
 
 /**
- * Parser
+ * Parser - abstract class from which the e-books handlers are created 
  */
 abstract public class Parser {
 	protected EBook eBook;
 	protected boolean isExtractCover;
 
+	/**
+	 * Handles the e-book extracts contained therein meta-information
+	 * @param fileName - the name of the file to be processed
+	 * @return - instance of the class EBook with the fields filled with
+	 * e-book meta-information
+	 */
 	public EBook parse(String fileName) {
 		return this.parse(fileName, false);
 	}
 	
-	public EBook parse(String fileName, boolean extractCover) {
+	/**
+	 * @param fileName
+	 * @param extractCover
+	 * @return
+	 */
+	protected EBook parse(String fileName, boolean extractCover) {
 		this.isExtractCover = extractCover;
 		this.eBook = new EBook();
 		this.eBook.fileName = fileName;
@@ -42,6 +53,11 @@ abstract public class Parser {
 	
 	abstract protected void parseFile();
 
+	/**
+	 * Returns instance of the class EBook with the fields filled with
+	 * e-book meta-information 
+	 * @return - instance of the class EBook 
+	 */
 	public EBook getEBoook() {
 		return this.eBook;
 	}

@@ -26,7 +26,7 @@ import ebook.Person;
 /**
  * FB2InstantParser
  */
-public class Fb2InstantParser {
+class Fb2InstantParser {
 	private final int MAX_FB2INFO_SIZE = 4096;
 	private final int MAX_XMLINFO_SIZE = 80;
 	private EBook eBook;

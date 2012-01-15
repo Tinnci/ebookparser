@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 /**
  * Store of Patterns
  */
-public class SOP {
+class SOP {
 	protected static Pattern fb2File;
 	protected static Pattern fb2zipFile;
 	protected static Pattern epubFile;

@@ -30,7 +30,7 @@ import ebook.Person;
 /**
  * EpubInstantParser
  */
-public class EpubInstantParser {
+class EpubInstantParser {
 	private final int MAX_EPUBINFO_SIZE = 2048;
 	private final int MAX_XMLINFO_SIZE = 80;
 	private EBook eBook;

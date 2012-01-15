@@ -26,13 +26,10 @@ import java.util.zip.ZipFile;
 import ebook.EBookFormat;
 
 /**
- * InstantParser
+ * InstantParser - very fast, instant handler of the information contained 
+ * in the files of e-books
  */
 public class InstantParser extends ebook.parser.Parser {
-	/**
-	 * @param fileName
-	 */
-
 	protected void parseFile() {
 		if (SOP.fb2File.matcher(this.eBook.fileName).matches()) {
 			this.eBook.format = EBookFormat.FB2;
@@ -67,8 +64,9 @@ public class InstantParser extends ebook.parser.Parser {
 		try {
 			ZipFile zipFile = new ZipFile(this.eBook.fileName);
 			ZipEntry entry = zipFile.entries().nextElement();
-			InputStream inputStream = zipFile.getInputStream(entry); 
-			Fb2InstantParser parser = new Fb2InstantParser(this.eBook, inputStream);
+			InputStream inputStream = zipFile.getInputStream(entry);
+			Fb2InstantParser parser = new Fb2InstantParser(this.eBook,
+					inputStream);
 			parser.parse();
 			inputStream.close();
 			zipFile.close();
