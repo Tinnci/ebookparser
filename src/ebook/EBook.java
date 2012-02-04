@@ -86,7 +86,7 @@ public class EBook {
 	 * Picture of e-book cover
 	 */
 	public byte[] cover;
-
+	public boolean doExtractCover;
 	/**
 	 * The class constructor, fills the fields with null values
 	 */

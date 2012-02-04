@@ -24,7 +24,6 @@ import ebook.EBook;
  */
 abstract public class Parser {
 	protected EBook eBook;
-	protected boolean isExtractCover;
 
 	/**
 	 * Handles the e-book extracts contained therein meta-information
@@ -41,10 +40,10 @@ abstract public class Parser {
 	 * @param extractCover
 	 * @return
 	 */
-	protected EBook parse(String fileName, boolean extractCover) {
-		this.isExtractCover = extractCover;
+	public EBook parse(String fileName, boolean extractCover) {
 		this.eBook = new EBook();
 		this.eBook.fileName = fileName;
+		this.eBook.doExtractCover = extractCover;
 		this.eBook.isOk = false;
 		this.parseFile();
 		return this.eBook;

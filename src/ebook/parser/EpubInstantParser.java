@@ -31,10 +31,12 @@ import ebook.Person;
  * EpubInstantParser
  */
 class EpubInstantParser {
-	private final int MAX_EPUBINFO_SIZE = 2048;
+	private final int MAX_EPUBINFO_SIZE = 4096;
 	private final int MAX_XMLINFO_SIZE = 80;
 	private EBook eBook;
 	private String source;
+	private ZipFile zipFile;
+	private Enumeration<? extends ZipEntry> zipEntries;
 
 	EpubInstantParser(EBook eBook) throws IOException {
 		this.eBook = eBook;
@@ -43,10 +45,10 @@ class EpubInstantParser {
 
 	private String createSource() throws IOException {
 		ZipEntry entry = null;
-		ZipFile zipFile = new ZipFile(this.eBook.fileName);
-		Enumeration<? extends ZipEntry> entries = zipFile.entries();
-		while (entries.hasMoreElements()) {
-			entry = entries.nextElement();
+		zipFile = new ZipFile(this.eBook.fileName);
+		zipEntries = zipFile.entries();
+		while (zipEntries.hasMoreElements()) {
+			entry = zipEntries.nextElement();
 			if (entry.getName().matches("(?i).*\\.opf$"))
 				break;
 		}
@@ -97,7 +99,7 @@ class EpubInstantParser {
 		return encoding;
 	}
 
-	protected void parse() {
+	protected void parse() throws IOException {
 		Matcher matcher;
 		matcher = SOP.epubTitle.matcher(this.source);
 		if (matcher.find())
@@ -113,6 +115,31 @@ class EpubInstantParser {
 		matcher = SOP.epubGenre.matcher(this.source);
 		while (matcher.find())
 			this.eBook.epubGenres.add(matcher.group(1));
+		if (this.eBook.doExtractCover) {
+			matcher = SOP.epubCover.matcher(this.source);
+			if (matcher.find())
+				this.eBook.cover = getCover(matcher.group(1));
+		}
 		this.eBook.isOk = true;
+	}
+
+	private byte[] getCover(String fileName) throws IOException {
+		ZipEntry entry = null;
+		zipEntries = zipFile.entries();
+		while (zipEntries.hasMoreElements()) {
+			entry = zipEntries.nextElement();
+			if (entry.getName().matches("(?i).*" + fileName))
+				break;
+		}
+		int fileLength = (int) entry.getSize();
+		InputStream inputStream = zipFile.getInputStream(entry);
+		byte[] output = new byte[fileLength];
+		int counter = 0;
+		int amount = 0;
+		while (amount < fileLength) {
+			counter = inputStream.read(output, amount, fileLength - amount);
+			amount += counter;
+		}
+		return output;
 	}
 }

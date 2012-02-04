@@ -44,6 +44,7 @@ class SOP {
 	protected static Pattern epubAuthor;
 	protected static Pattern epubLanguage;
 	protected static Pattern epubGenre;
+	protected static Pattern epubCover;
 //
 //	
 	static {
@@ -76,6 +77,8 @@ class SOP {
 				.compile("(?s)<dc:language.*?>(.*?)</dc:language>");
 		epubGenre = Pattern
 				.compile("(?s)<dc:subject.*?>(.*?)</dc:subject>");
+		epubCover = Pattern
+				.compile("(?s)<embeddedcover>(.*?)</embeddedcover>");
 	}
 
 
