@@ -33,7 +33,6 @@ class Fb2InstantParser {
 	private final int MAX_FB2_SIZE = 2097152;
 	private EBook eBook;
 	private String source;
-	private String coverName;
 	private InputStream input;
 
 	Fb2InstantParser(EBook eBook, InputStream input) throws IOException {
@@ -42,12 +41,16 @@ class Fb2InstantParser {
 		this.input = input;
 	}
 
-	private String createSource(InputStream stream) throws IOException, NullPointerException {
+	private String createSource(InputStream stream) throws IOException,
+			NullPointerException {
 		byte[] buffer = readInputStream(stream);
 		this.eBook.encoding = this.getXmlEncoding(buffer);
-		String preparedInput = new String(buffer,this.eBook.encoding);
-		preparedInput = SOP.fb2Annotation.matcher(preparedInput)
-				.replaceFirst("");
+		String preparedInput = new String(buffer, this.eBook.encoding);
+		Matcher matcher =  SOP.fb2Annotation.matcher(preparedInput);
+		if (matcher.find()) {
+			this.eBook.annotation = matcher.group(1);
+			preparedInput = matcher.replaceFirst("");
+		}
 		return preparedInput;
 	}
 
@@ -78,7 +81,6 @@ class Fb2InstantParser {
 		return output;
 	}
 
-	
 	private String getXmlEncoding(byte[] input) throws IOException {
 		String encoding = null;
 		String xmlHeader = new String(input, 0, MAX_XMLINFO_SIZE, "ISO-8859-1");
@@ -129,41 +131,43 @@ class Fb2InstantParser {
 			if (matcher.find())
 				this.eBook.sequenceNumber = matcher.group(1);
 		}
-		matcher = SOP.fb2CoverName.matcher(source);
-		if (matcher.find()) {
-			this.coverName = matcher.group(1);
-			this.eBook.cover = getCover();
+		if (eBook.doExtractCover) {
+			matcher = SOP.fb2CoverName.matcher(source);
+			if (matcher.find()) {
+				matcher.group(1);
+				this.eBook.cover = getCover();
+			}
 		}
 		this.eBook.isOk = true;
 	}
 
-	private byte[] getCover()  {
-//		int q = this.input.available();
+	private byte[] getCover() {
+		// int q = this.input.available();
 		byte[] buffer = new byte[MAX_FB2_SIZE];
 		byte[] cover64;
 		int amount = 0;
 		int count = 0;
 		try {
-		while ((amount < MAX_FB2_SIZE) && (count != -1)) {
-			count = this.input.read(buffer, amount, MAX_FB2_SIZE - amount);
-			if (count != -1)
-				amount += count;
-		}
-		} catch(IOException e) {
+			while ((amount < MAX_FB2_SIZE) && (count != -1)) {
+				count = this.input.read(buffer, amount, MAX_FB2_SIZE - amount);
+				if (count != -1)
+					amount += count;
+			}
+		} catch (IOException e) {
 		}
 		if (amount == MAX_FB2_SIZE) {
 			return null;
 		} else {
 			int stop = -1;
 			int start = -1;
-			int counter = amount -1;
+			int counter = amount - 1;
 			while (counter >= 0) {
 				if (buffer[counter] == '<')
 					if (buffer[counter + 1] == '/')
 						if (buffer[counter + 2] == 'b')
 							if (buffer[counter + 7] == 'y')
 								if (buffer[counter + 8] == '>') {
-									stop = counter -1;
+									stop = counter - 1;
 									break;
 								}
 				counter--;
@@ -179,6 +183,9 @@ class Fb2InstantParser {
 								}
 				counter--;
 			}
+			if ((start == -1) || (stop == -1)) {
+				return null;
+			}
 			while (counter < stop) {
 				if (buffer[counter] == '>') {
 					start = counter + 1;
@@ -190,8 +197,6 @@ class Fb2InstantParser {
 			cover64 = new byte[newSize];
 			System.arraycopy(buffer, start, cover64, 0, newSize);
 		}
-//		byte[] ncover = Base64.decodeBase64(cover64);
 		return Base64Decoder.decode(cover64);
 	}
-	
 }

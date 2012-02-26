@@ -56,8 +56,11 @@ class EpubInstantParser {
 		byte[] buffer = readInputStream(inputStream);
 		String encoding = getXmlEncoding(buffer);
 		String preparedInput = new String(buffer, encoding);
-		preparedInput = SOP.epubDescription.matcher(preparedInput)
-				.replaceFirst("");
+		Matcher matcher = SOP.epubDescription.matcher(preparedInput);
+		if (matcher.find()) {
+			this.eBook.annotation = matcher.group(1);
+			preparedInput = matcher.replaceFirst("");
+		}
 		return preparedInput;
 	}
 
