@@ -1,3 +1,7 @@
+2012-02-26 Andrew Mochalov <avmae@mail.ru
+	* Version 1.2 released
+	* Implemented extraction book covers from fb2 and fb2.zip files
+
 2012-02-05 Andrew Mochalov <avmae@mail.ru
 	* Version 1.1 released
 	* Implemented extraction book covers from epub files
