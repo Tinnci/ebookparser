@@ -20,6 +20,7 @@ package ebook.parser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.regex.*;
+
 import ebook.EBook;
 import ebook.Person;
 
@@ -29,12 +30,16 @@ import ebook.Person;
 class Fb2InstantParser {
 	private final int MAX_FB2INFO_SIZE = 4096;
 	private final int MAX_XMLINFO_SIZE = 80;
+	private final int MAX_FB2_SIZE = 2097152;
 	private EBook eBook;
 	private String source;
+	private String coverName;
+	private InputStream input;
 
 	Fb2InstantParser(EBook eBook, InputStream input) throws IOException {
 		this.eBook = eBook;
 		this.source = this.createSource(input);
+		this.input = input;
 	}
 
 	private String createSource(InputStream stream) throws IOException, NullPointerException {
@@ -124,6 +129,69 @@ class Fb2InstantParser {
 			if (matcher.find())
 				this.eBook.sequenceNumber = matcher.group(1);
 		}
+		matcher = SOP.fb2CoverName.matcher(source);
+		if (matcher.find()) {
+			this.coverName = matcher.group(1);
+			this.eBook.cover = getCover();
+		}
 		this.eBook.isOk = true;
 	}
+
+	private byte[] getCover()  {
+//		int q = this.input.available();
+		byte[] buffer = new byte[MAX_FB2_SIZE];
+		byte[] cover64;
+		int amount = 0;
+		int count = 0;
+		try {
+		while ((amount < MAX_FB2_SIZE) && (count != -1)) {
+			count = this.input.read(buffer, amount, MAX_FB2_SIZE - amount);
+			if (count != -1)
+				amount += count;
+		}
+		} catch(IOException e) {
+		}
+		if (amount == MAX_FB2_SIZE) {
+			return null;
+		} else {
+			int stop = -1;
+			int start = -1;
+			int counter = amount -1;
+			while (counter >= 0) {
+				if (buffer[counter] == '<')
+					if (buffer[counter + 1] == '/')
+						if (buffer[counter + 2] == 'b')
+							if (buffer[counter + 7] == 'y')
+								if (buffer[counter + 8] == '>') {
+									stop = counter -1;
+									break;
+								}
+				counter--;
+			}
+			while (counter >= 0) {
+				if (buffer[counter] == '<')
+					if (buffer[counter + 1] == 'b')
+						if (buffer[counter + 3] == 'n')
+							if (buffer[counter + 5] == 'r')
+								if (buffer[counter + 6] == 'y') {
+									start = counter;
+									break;
+								}
+				counter--;
+			}
+			while (counter < stop) {
+				if (buffer[counter] == '>') {
+					start = counter + 1;
+					break;
+				}
+				counter++;
+			}
+			int newSize = stop - start + 1;
+			cover64 = new byte[newSize];
+			System.arraycopy(buffer, start, cover64, 0, newSize);
+		}
+//		byte[] ncover = Base64.decodeBase64(cover64);
+		return Base64Decoder.decode(cover64);
+	}
+	
 }

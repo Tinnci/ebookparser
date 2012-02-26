@@ -39,6 +39,7 @@ class SOP {
 	protected static Pattern fb2SequenceName;
 	protected static Pattern fb2SequenceNumber;
 	protected static Pattern fb2Annotation;
+	protected static Pattern fb2CoverName;
 	protected static Pattern epubDescription;
 	protected static Pattern epubTitle;
 	protected static Pattern epubAuthor;
@@ -67,6 +68,8 @@ class SOP {
 
 		fb2Annotation = Pattern
 				.compile("(?s)<annotation>(.*?)</annotation>");
+		fb2CoverName = Pattern
+				.compile("(?s)<coverpage>.*href=\"#(.*?)\".*</coverpage>");
 		epubDescription = Pattern
 				.compile("(?s)<dc:description>(.*?)</dc:description>");
 		epubTitle = Pattern
