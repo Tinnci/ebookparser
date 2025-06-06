@@ -15,14 +15,14 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
  */
-package ebook.parser;
+package com.gacode.ebookparser.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.regex.*;
 
-import ebook.EBook;
-import ebook.Person;
+import com.gacode.ebookparser.EBook;
+import com.gacode.ebookparser.Person;
 
 /**
  * FB2InstantParser

@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
  */
-package ebook.parser;
+package com.gacode.ebookparser.parser;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,13 +23,13 @@ import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import ebook.EBookFormat;
+import com.gacode.ebookparser.EBookFormat;
 
 /**
  * InstantParser - very fast, instant handler of the information contained 
  * in the files of e-books
  */
-public class InstantParser extends ebook.parser.Parser {
+public class InstantParser extends Parser {
 	protected void parseFile() {
 		if (SOP.fb2File.matcher(this.eBook.fileName).matches()) {
 			this.eBook.format = EBookFormat.FB2;

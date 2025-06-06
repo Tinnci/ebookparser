@@ -1,4 +1,4 @@
-package ebook.parser;
+package com.gacode.ebookparser.parser;
 /*
  * Copyright (C) 2012 Andrew Mochalov <avmae@mail.ru>
  * 

@@ -15,9 +15,9 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
  */
-package ebook.parser;
+package com.gacode.ebookparser.parser;
 
-import ebook.EBook;
+import com.gacode.ebookparser.EBook;
 
 /**
  * Parser - abstract class from which the e-books handlers are created 

@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
  */
-package ebook;
+package com.gacode.ebookparser;
 
 /**
  *ParsingType - Enumeration, that contains kinds of processing of e-books 
